@@ -1,22 +1,16 @@
 <!-- index.html -->
-<html lang='en' data-ng-app='weightMateApp'>
+<html lang='en'>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Weight Mate</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+
   <script src="app.js"></script>
 </head>
-<body ng-controller='buddiesCtrl as vm'>
-    <div data-ng-repeat="buddy in vm.buddies">
-      <h3>{{buddy.first_name}} ({{buddy.username}})</h3>
-      <img data-ng-src="{{buddy.img_url}}" alt="{{buddy.first_name}}">
-      <p>Address:{{buddy.street_address}} {{buddy.city}}, {{buddy.state}} {{buddy.zip}}</p>
-      <h3>Benchmark Lifts:</h3>
-        <p>Bench: {{buddy.bench}}</p>
-        <p>Deadlift: {{buddy.deadlift}}</p>
-        <p>Squat: {{buddy.squat}}</p>
-    </div>
+<body data-ng-app='weightMateApp'>
+  <div data-ui-view></div>
 </body>
 </html>
