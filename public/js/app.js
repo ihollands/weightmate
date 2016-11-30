@@ -1,59 +1,80 @@
-// var express = require('express')
-// var path = require('path')
-// var favicon = require('serve-favicon')
-// var logger = require('morgan')
-// var cookieParser = require('cookie-parser')
-// var bodyParser = require('body-parser')
-// var passport = require('passport')
-//
-// require('./app_api/models/users')
-// require('./app_api/config/passport')
-//
-// mongoose.connect("mongodb://localhost/weightmate")
+angular
+  .module("weightMateApp", [
+    "ui.router",
+    "ngResource"
+  ])
 
-var app = angular.module('weightMateApp', ['ui.router'])
+  .config([
+    "$stateProvider",
+    "$locationProvider",
+    "$urlRouterProvider",
+    RouterFunction
+  ])
 
-app.factory('users', [function() {
-  var o = {
-    users: []
+  .factory("UserFactory", [
+    "$resource",
+    UserFactoryFunction
+  ])
+  //
+  // .controller("UserShowCtrl", [
+  //   "$state",
+  //   "$stateParams",
+  //   "User",
+  //   UserShowControllerFunction
+  // ])
+
+  function RouterFunction ($stateProvider, $locationProvider, $urlRouterProvider) {
+    $locationProvider.html5Mode(true)
+    $stateProvider
+      .state("welcome", {
+        url: "/",
+        templateUrl: "/assets/js/ng-views/welcome.html"
+      })
+      .state("login", {
+        url: "/login",
+        templateUrl: "/assets/js/ng-views/logreg/login.html"
+      })
+      .state("register", {
+        url: "/register",
+        templateUrl: "/assets/js/ng-views/logreg/register.html"
+      })
+      // .state("show", {
+      //   url: "/candidates/:name",
+      //   templateUrl: "/assets/js/ng-views/show.html",
+      //   controller: "showCtrl",
+      //   controllerAs: "vm"
+      // })
+    $urlRouterProvider.otherwise("/")
   }
-  return o
-}])
 
-app.controller('MainCtrl', [
-'$scope',
-'users',
-function($scope, users){
-  $scope.users = users.users
-}])
-
-app.controller('UsersCtrl', [
-'$scope',
-'$stateParams',
-'users',
-function($scope, $stateParams, users){
-  $scope.user = users.users[$stateParams.id]
-}])
-
-app.config([
-'$stateProvider',
-'$urlRouterProvider',
-function($stateProvider, $urlRouterProvider) {
-
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: '/home.html',
-      controller: 'MainCtrl'
+  function UserFactoryFunction ($resource) {
+    return $resource("/api/users/:email", {}, {
+      update: {method: "PUT"}
     })
-    .state('users', {
-      url: '/users/{id}',
-      templateUrl: '/users.html',
-      controller: 'UsersCtrl'
-    })
+  }
 
-  $urlRouterProvider.otherwise('home')
-}])
+  // function indexController ($state, User) {
+  // User.query().$promise.then(response => this.users = response)
+  //   this.newCandidate = new Candidate()
+  //   this.create = function() {
+  //     this.newCandidate.$save().then(function(candidate){
+  //       $state.go("show", {name: candidate.name})
+  //     })
+  //   }
+  // }
+
+  // function showController ($state, $stateParams, Candidate) {
+  //   this.candidate = Candidate.get({name: $stateParams.name})
+  //   this.update = function() {
+  //     this.candidate.$update({name: $stateParams.name})
+  //   }
+  //   this.destroy = function() {
+  //     this.candidate.$delete({name: $stateParams.name}).then(function(){
+  //       $state.go("index")
+  //     })
+  //   }
+  // }
+
 
 
 // app.controller("NewCtrl", [
