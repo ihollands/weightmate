@@ -11,17 +11,23 @@ angular
     RouterFunction
   ])
 
-  .factory("UserFactory", [
-    "$resource",
-    UserFactoryFunction
+  .service('authentication', [
+    '$http',
+    '$window',
+    authentication
   ])
-  //
-  // .controller("UserShowCtrl", [
-  //   "$state",
-  //   "$stateParams",
-  //   "User",
-  //   UserShowControllerFunction
+
+  .controller('loginCtrl', [
+    '$state',
+    authentication,
+    loginControllerFunction
+  ])
+
+  // .factory("UserFactory", [
+  //   "$resource",
+  //   UserFactoryFunction
   // ])
+
 
   function RouterFunction ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode(true)
@@ -32,26 +38,117 @@ angular
       })
       .state("login", {
         url: "/login",
-        templateUrl: "/assets/js/ng-views/logreg/login.html"
+        templateUrl: "/assets/js/ng-views/logreg/login.html",
+        controller: "loginCtrl",
+        controllerAs: "vm"
       })
       .state("register", {
         url: "/register",
-        templateUrl: "/assets/js/ng-views/logreg/register.html"
+        templateUrl: "/assets/js/ng-views/logreg/register.html",
+        controller: "registerCtrl",
+        controllerAs: "vm"
       })
-      // .state("show", {
-      //   url: "/candidates/:name",
-      //   templateUrl: "/assets/js/ng-views/show.html",
-      //   controller: "showCtrl",
+      // .state("login", {
+      //   url: "/login",
+      //   templateUrl: "/assets/js/ng-views/logreg/login.html",
+      //   controller: "loginCtrl",
       //   controllerAs: "vm"
       // })
+
     $urlRouterProvider.otherwise("/")
   }
 
-  function UserFactoryFunction ($resource) {
-    return $resource("/api/users/:email", {}, {
-      update: {method: "PUT"}
-    })
+//authentication service function
+  function authentication ($http, $window) {
+
+    var saveToken = function (token) {
+      $window.localStorage['mean-token'] = token
+    }
+
+    var getToken = function () {
+      return $window.localStorage['mean-token']
+    }
+
+    logout = function() {
+      $window.localStorage.removeItem('mean-token')
+    }
+
+    register = function(user) {
+    return $http.post('/api/register', user).success(function(data){
+      saveToken(data.token)
+      })
+    }
+
+    login = function(user) {
+    return $http.post('/api/login', user).success(function(data) {
+      saveToken(data.token)
+      })
+    }
+
+    return {
+      saveToken,
+      getToken,
+      logout
+    }
+
   }
+
+
+  function loginControllerFunction ($state, authentication) {
+    var vm = this;
+
+    vm.credentials = {
+      email : "",
+      password : ""
+    };
+
+    vm.onSubmit = function () {
+      authentication
+      .login(vm.credentials)
+      .error(function(err){
+        alert(err);
+      })
+      .then(function(){
+        $state.go('profile');
+      });
+    };
+
+  }
+
+  function registerControllerFunction ($state, authentication) {
+    var vm = this;
+
+    vm.credentials = {
+      email : "",
+      password : ""
+    };
+
+    vm.onSubmit = function () {
+      authentication
+        .register(vm.credentials)
+        .error(function(err){
+          alert(err);
+        })
+        .then(function(){
+          $state.go('profile');
+        });
+    };
+
+
+  // function UserFactoryFunction ($resource) {
+  //   return $resource("/api/users/:email", {}, {
+  //     update: {method: "PUT"}
+  //   })
+  // }
+
+
+
+
+
+
+
+
+
 
   // function indexController ($state, User) {
   // User.query().$promise.then(response => this.users = response)
@@ -112,11 +209,3 @@ angular
 //     }
 //   ])
 //
-
-//ERROR CATCHING SECTION
-// app.use(function (err, req, res, next) {
-//   if (err.name === 'UnauthorizedError') {
-//     res.status(401)
-//     res.json({"message" : err.name + ": " + err.message})
-//   }
-// })
