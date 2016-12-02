@@ -1,0 +1,6 @@
+{
+  "name": "Weightmate",
+  "tagline": "Gym buddy matching site to connect you with lifting parters near your gym",
+  "body": "# weightmate\r\nGym buddy matching site to connect you with lifting parters near your gym\r\n\r\nOne of the biggest challenges that I have found with coding has been foreseeing and proactively reconciling my ambitions and aspirations for my projects with my ability.\r\n\r\nOn the one hand, I learned an enormous amount about user authorization in the MEAN stack (not to mention, quite a bit about the MEAN stack itself and how its elements interact). On the other hand, I focused so heavily on getting user authorization to work, and function, that I failed to enact any of the business logic which would have made my site more worthwhile.\r\n\r\nI lament that, in its present state, my site does not function nor look as I had wished. However, I am very happy to say that I understand (at least on a fundamental level) how user auth works via a JS framework, and I hope to work the business logic into the site in short order.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
