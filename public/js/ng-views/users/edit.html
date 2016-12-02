@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+
+     <div class="col-md-6">
+
+      <h1 class="form-signin-heading">Profile Edit</h1>
+
+      <form ng-submit="vm.onSubmit()">
+        <div>
+          <input type="text" placeholder="First name" ng-model="vm.newValues.first_name">
+          <input type="text" placeholder="Last name" ng-model="vm.newValues.last_name">
+          <input type="text" placeholder="Username" ng-model="vm.newValues.username">
+          <input type="text" placeholder="Email" ng-model="vm.newValues.email">
+          <input type="text" placeholder="Image (URL)" ng-model="vm.newValues.img_url">
+        </div>
+        <div>
+          <input type="text" placeholder="City" ng-model="vm.newValues.city">
+          <input type="text" placeholder="State" ng-model="vm.newValues.state">
+          <input type="text" placeholder="ZIP Code" ng-model="vm.newValues.zip">
+          <input type="text" placeholder="Street Address" ng-model="vm.newValues.street_address1">
+          <input type="text" placeholder="Apt or Condo" ng-model="vm.newValues.street_address2">
+        </div>
+        <div>
+          <input type="number" placeholder="Age" ng-model="vm.newValues.age">
+          <input type="number" placeholder="Weight" ng-model="vm.newValues.weight">
+          <input type="number" placeholder="How many times/week do you workout?" ng-model="vm.newValues.workout_freq">
+          <input type="number" placeholder="What hour of the day do you workout (1-24)" ng-model="vm.newValues.workout_time">
+          <input type="text" placeholder="Max Bench Press (lbs)" ng-model="vm.newValues.bench">
+          <input type="text" placeholder="Max Squat (lbs)" ng-model="vm.newValues.squat">
+          <input type="text" placeholder="Max Deadlift (lbs)" ng-model="vm.newValues.deadlift">
+          <input type="text" placeholder="Your gym" ng-model="vm.newValues.gym">
+        </div>
+        <button type="submit" class="btn btn-default">Update!</button>
+      </form>
+    </div>
+
+  </div>
+</div>

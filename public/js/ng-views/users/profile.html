@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+
+     <div class="col-md-6">
+
+      <h1 class="form-signin-heading">Your profile</h1>
+
+      <form  class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Username</label>
+          <p class="form-control-static">{{ vm.user.username }}</p>
+          <label class="col-sm-3 control-label">Email</label>
+          <p class="form-control-static">{{ vm.user.email }}</p>
+        </div>
+      </form>
+
+    </div>
+
+    <a ui-sref="edit({email: vm.user.email})">Edit your profile</a>
+
+  </div>
+</div>
